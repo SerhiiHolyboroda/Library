@@ -53,7 +53,7 @@ You can try the Library Manager **directly in my Salesforce org**:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/username/Library.git
+git clone https://github.com/SerhiiHolyboroda/Library
 
 Deploy lwc, apex and objects metadata to your org
 
@@ -63,7 +63,5 @@ Relationships Overview
 Book → Author: Master-Detail relationship; each book belongs to one author.
 
 BookGenre → Book & Genre: Master-Detail relationships; a book can belong to multiple genres.
-
-Author & Genre: Independent objects linked to Book via Master-Detail or BookGenre.
 
 <img src="https://serhiiholyboroda.github.io/Library/photo.jpg" style="width:900px;height:400px">
