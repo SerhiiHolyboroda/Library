@@ -1,0 +1,136 @@
+<template>
+    <lightning-card title="Library Manager" icon-name="custom:custom63">
+        <div class="slds-p-around_medium">
+
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="12">
+                    <lightning-button label="Add Book" variant="brand" onclick={openAddBookModal}></lightning-button>
+
+                </lightning-layout-item>
+                <lightning-button label="Export All Books" icon-name="utility:download" class="slds-m-bottom_small"
+                    onclick={handleExportBooks}>
+                </lightning-button>
+                <lightning-layout-item size="12" class="slds-m-top_medium">
+                    <lightning-datatable key-field="Id" data={books} columns={bookColumns} hide-checkbox-column
+                        onrowaction={handleRowAction}>
+                    </lightning-datatable>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout-item size="6" class="slds-m-top_medium">
+                <lightning-combobox name="authorFilter" label="Filter by Author" placeholder="Select Author"
+                    options={authorOptionsWithAll} value={selectedAuthorId} onchange={handleAuthorFilterChange}>
+                </lightning-combobox>
+            </lightning-layout-item>
+
+            <lightning-layout-item size="6" class="slds-m-top_medium">
+                <lightning-combobox name="genreFilter" label="Filter by Genre" placeholder="Select Genre"
+                    options={genreOptionsWithAll} value={selectedGenreId} onchange={handleGenreFilterChange}>
+                </lightning-combobox>
+            </lightning-layout-item>
+            <div class="slds-m-top_large">
+                <h3 class="slds-text-heading_small">Authors</h3>
+                <lightning-button label="Add Author" variant="neutral" onclick={openAddAuthorModal}></lightning-button>
+                <ul class="slds-m-top_small">
+                    <template for:each={authors} for:item="a">
+                        <li key={a.Id}>
+                            {a.Name}
+                            <lightning-button-icon icon-name="utility:edit" size="x-small" alternative-text="Edit"
+                                onclick={openEditAuthorModal} data-id={a.Id}></lightning-button-icon>
+                            <lightning-button-icon icon-name="utility:delete" size="x-small" alternative-text="Delete"
+                                onclick={handleDeleteAuthor} data-id={a.Id}></lightning-button-icon>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+
+            <div class="slds-m-top_large">
+                <h3 class="slds-text-heading_small">Genres</h3>
+                <lightning-button label="Add Genre" variant="neutral" onclick={openAddGenreModal}></lightning-button>
+                <ul class="slds-m-top_small">
+                    <template for:each={genres} for:item="g">
+                        <li key={g.Id}>
+                            {g.Name}
+                            <lightning-button-icon icon-name="utility:edit" size="x-small" alternative-text="Edit"
+                                onclick={openEditGenreModal} data-id={g.Id}></lightning-button-icon>
+                            <lightning-button-icon icon-name="utility:delete" size="x-small" alternative-text="Delete"
+                                onclick={handleDeleteGenre} data-id={g.Id}></lightning-button-icon>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+
+        </div>
+    </lightning-card>
+
+    <template if:true={isBookModalOpen}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">{bookModalTitle}</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+
+                    <lightning-input label="Book Name" value={currentBookName}
+                        onchange={handleBookNameChange}></lightning-input>
+
+                    <lightning-combobox name="author" label="Author" placeholder="Select Author" options={authorOptions}
+                        value={currentBookAuthorId} onchange={handleAuthorChange}>
+                    </lightning-combobox>
+
+                    <lightning-input label="Publication Year" type="date" value={currentBookYear}
+                        onchange={handleBookYearChange}></lightning-input>
+
+                    <lightning-dual-listbox name="genres" label="Genres" source-label="Available"
+                        selected-label="Selected" options={genreOptions} value={currentBookGenreIds}
+                        onchange={handleGenreChange}>
+                    </lightning-dual-listbox>
+
+                    <div class="slds-m-top_medium">
+                        <lightning-button label="Save" variant="brand" onclick={saveBook}></lightning-button>
+                        <lightning-button label="Cancel" onclick={closeBookModal}></lightning-button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <template if:true={isAuthorModalOpen}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">{authorModalTitle}</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning-input label="Author Name" value={currentAuthorName}
+                        onchange={handleAuthorNameChange}></lightning-input>
+                    <div class="slds-m-top_medium">
+                        <lightning-button label="Save" variant="brand" onclick={saveAuthor}></lightning-button>
+                        <lightning-button label="Cancel" onclick={closeAuthorModal}></lightning-button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <template if:true={isGenreModalOpen}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 class="slds-text-heading_medium">{genreModalTitle}</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium">
+                    <lightning-input label="Genre Name" value={currentGenreName}
+                        onchange={handleGenreNameChange}></lightning-input>
+                    <div class="slds-m-top_medium">
+                        <lightning-button label="Save" variant="brand" onclick={saveGenre}></lightning-button>
+                        <lightning-button label="Cancel" onclick={closeGenreModal}></lightning-button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>
