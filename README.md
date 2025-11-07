@@ -1,18 +1,69 @@
-# Salesforce DX Project: Next Steps
+# Library Manager LWC Project
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+This Salesforce Lightning Web Component (LWC) project is a **Library Manager** that allows users to manage books, authors, and genres efficiently. It provides a modern interface with full CRUD operations, data export, and sorting capabilities.
 
-## How Do You Plan to Deploy Your Changes?
+---
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+## Features
 
-## Configure Your Salesforce DX Project
+- **Add, Edit, and Delete Books**  
+  Users can create new books, update existing ones, or remove books from the library.
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+- **Manage Authors**  
+  Add, edit, and delete authors associated with books.
 
-## Read All About It
+- **Manage Genres**  
+  Add, edit, and delete genres for better classification of books.
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+- **Export Books**  
+  Users can export all books to CSV for offline use.
+
+- **Sort and Filter**  
+  Sort books by author or genre to quickly find the desired records.
+
+---
+
+## Components
+
+- **Book Management LWC**  
+  Handles all operations related to books.
+
+- **Author Management LWC**  
+  Handles CRUD operations for authors.
+
+- **Genre Management LWC**  
+  Handles CRUD operations for genres.
+
+- **Export & Sorting Functionality**  
+  Buttons and comboboxes allow users to export data and sort by author or genre.
+
+---
+
+## Live Demo
+
+You can try the Library Manager **directly in my Salesforce org**:  
+[Open in Salesforce Org](https://brave-bear-35nx4h-dev-ed.trailblaze.lightning.force.com/lightning/n/Library)
+
+> ⚠️ Note: If you want to install this project in your own Salesforce org, all objects used in this project have been exported for easy deployment.
+
+---
+
+## Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/username/Library.git
+
+Deploy lwc, apex and objects metadata to your org
+
+
+Relationships Overview
+
+Book → Author: Master-Detail relationship; each book belongs to one author.
+
+BookGenre → Book & Genre: Master-Detail relationships; a book can belong to multiple genres.
+
+Author & Genre: Independent objects linked to Book via Master-Detail or BookGenre.
+
+<img src="../data.png" width="600">
