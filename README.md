@@ -66,4 +66,4 @@ BookGenre → Book & Genre: Master-Detail relationships; a book can belong to mu
 
 Author & Genre: Independent objects linked to Book via Master-Detail or BookGenre.
 
-<img src="../data.png" width="600">
+<img src="https://serhiiholyboroda.github.io/Library/photo.jpg" style="width:1200px;height:900px">
