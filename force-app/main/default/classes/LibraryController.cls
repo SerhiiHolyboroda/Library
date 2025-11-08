@@ -111,6 +111,50 @@ public static Id upsertBook(Book__c bookRecord, List<Id> genreIds) {
 
 
 
+@AuraEnabled
+public static void generateDemoData() {
+    if ([SELECT COUNT() FROM Genre__c] == 0) {
+        List<Genre__c> genres = new List<Genre__c>{
+            new Genre__c(Name = 'Science Fiction'),
+            new Genre__c(Name = 'Fantasy'),
+            new Genre__c(Name = 'Mystery'),
+            new Genre__c(Name = 'Non-Fiction'),
+            new Genre__c(Name = 'Romance')
+        };
+        insert genres;
+    }
+
+    if ([SELECT COUNT() FROM Author__c] == 0) {
+        List<Author__c> authors = new List<Author__c>{
+            new Author__c(Name = 'Isaac Asimov'),
+            new Author__c(Name = 'J.K. Rowling'),
+            new Author__c(Name = 'Agatha Christie'),
+            new Author__c(Name = 'George Orwell'),
+            new Author__c(Name = 'Jane Austen')
+        };
+        insert authors;
+    }
+
+    if ([SELECT COUNT() FROM Book__c] == 0) {
+        List<Author__c> authors = [SELECT Id FROM Author__c];
+        List<Genre__c> genres = [SELECT Id FROM Genre__c];
+        List<Book__c> books = new List<Book__c>();
+
+        books.add(new Book__c(Name = 'Foundation', Author__c = authors[0].Id, PublicationYear__c = Date.newInstance(1951,1,1)));
+        books.add(new Book__c(Name = 'Harry Potter', Author__c = authors[1].Id, PublicationYear__c = Date.newInstance(1997,1,1)));
+        books.add(new Book__c(Name = 'Murder on the Orient Express', Author__c = authors[2].Id, PublicationYear__c = Date.newInstance(1934,1,1)));
+        books.add(new Book__c(Name = '1984', Author__c = authors[3].Id, PublicationYear__c = Date.newInstance(1949,1,1)));
+        books.add(new Book__c(Name = 'Pride and Prejudice', Author__c = authors[4].Id, PublicationYear__c = Date.newInstance(1813,1,1)));
+        insert books;
+
+        List<BookGenre__c> bookGenres = new List<BookGenre__c>();
+        for (Book__c b : books) {
+            Genre__c randomGenre = genres[Math.mod(Crypto.getRandomInteger(), genres.size())];
+            bookGenres.add(new BookGenre__c(Book__c = b.Id, Genre__c = randomGenre.Id));
+        }
+        insert bookGenres;
+    }
+}
 
 
 }

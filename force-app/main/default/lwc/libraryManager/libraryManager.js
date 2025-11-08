@@ -8,6 +8,7 @@ import upsertGenre from '@salesforce/apex/LibraryController.upsertGenre';
 import deleteBook from '@salesforce/apex/LibraryController.deleteBook';
 import deleteAuthor from '@salesforce/apex/LibraryController.deleteAuthor';
 import deleteGenre from '@salesforce/apex/LibraryController.deleteGenre';
+import generateDemoData from '@salesforce/apex/LibraryController.generateDemoData';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
 import getBooksCSVDownloadUrl from '@salesforce/apex/LibraryController.getBooksCSVDownloadUrl';
@@ -318,5 +319,22 @@ filterBooks() {
         return authorMatch && genreMatch;
     });
 }
+
+
+async generateDemoData() {
+    try {
+        await generateDemoData();
+        this.showToast('Success', 'Demo authors, genres, and books generated!', 'success');
+        await Promise.all([
+            refreshApex(this.wiredAuthorsResult),
+            refreshApex(this.wiredGenresResult),
+            refreshApex(this.wiredBooksResult)
+        ]);
+    } catch (error) {
+        console.error(error);
+        this.showToast('Error', error.body?.message || 'Failed to generate demo data', 'error');
+    }
+}
+
 
 }
