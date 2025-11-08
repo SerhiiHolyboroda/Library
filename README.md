@@ -1,3 +1,11 @@
+# For quick and easy test of the app you can:
+
+# First, you need to register at:
+https://brave-bear-35nx4h-dev-ed.trailblaze.my.site.com/libraryvforcesite/CommunitiesSelfReg?startURL=%2Flibraryvforcesite%2Fsite%2FSiteRegister.apexp&locale=us
+
+# Then, go to:
+https://brave-bear-35nx4h-dev-ed.trailblaze.my.site.com/library/
+
 # Library Manager LWC Project
 
 This Salesforce Lightning Web Component (LWC) project is a **Library Manager** that allows users to manage books, authors, and genres efficiently. It provides a modern interface with full CRUD operations, data export, and sorting capabilities.
